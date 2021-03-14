@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta charset="utf-8">
+	<title>My first three.js app</title>
+	<style>
+		body {
+			margin: 0;
+		}
+
+		.grid-stack {
+			background: #FAFAD2;
+		}
+
+		.grid-stack-item-content {
+			background-color: #18BC9C;
+		}
+	</style>
+</head>
+
+<body>
+	<script src="js/three.module.js"></script>
+	<script type="module">
+		import { OrbitControls } from '../jsm/controls/OrbitControls.js';
+		let SCREEN_WIDTH = window.innerWidth;
+		let SCREEN_HEIGHT = window.innerHeight;
+		let container, camera, scene, renderer;
+		let cube
+		let controls
+
+		var items = [
+			{ content: 'my first widget' }, // will default to location (0,0) and 1x1
+			{ w: 2, content: 'another longer widget!' } // will be placed next at (1,0) and 2x1
+		];
+		//var grid = GridStack.init();
+		//grid.load(items);
+		function init() {
+			container = document.createElement('div');
+			document.body.appendChild(container);
+			// CAMERA
+			camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+			camera.position.set(0, 150, 400);
+
+			// SCENE
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color(0xffffff);
+			scene.fog = new THREE.Fog(0x050505, 400, 1000);
+
+			// LIGHTS
+			scene.add(new THREE.AmbientLight(0x222222));
+
+			const light1 = new THREE.SpotLight(0xffffff, 5, 1000);
+			light1.position.set(200, 250, 500);
+			light1.angle = 0.5;
+			light1.penumbra = 0.5;
+
+			light1.castShadow = true;
+			light1.shadow.mapSize.width = 1024;
+			light1.shadow.mapSize.height = 1024;
+
+			// scene.add( new THREE.CameraHelper( light1.shadow.camera ) );
+			scene.add(light1);
+
+			const light2 = new THREE.SpotLight(0xffffff, 5, 1000);
+			light2.position.set(- 100, 350, 350);
+			light2.angle = 0.5;
+			light2.penumbra = 0.5;
+
+			light2.castShadow = true;
+			light2.shadow.mapSize.width = 1024;
+			light2.shadow.mapSize.height = 1024;
+
+			// scene.add( new THREE.CameraHelper( light2.shadow.camera ) );
+			scene.add(light2);
+			//  GROUND
+			const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
+			const gg = new THREE.PlaneGeometry(16000, 16000);
+			const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
+
+			const ground = new THREE.Mesh(gg, gm);
+			ground.rotation.x = - Math.PI / 2;
+			ground.material.map.repeat.set(64, 64);
+			ground.material.map.wrapS = THREE.RepeatWrapping;
+			ground.material.map.wrapT = THREE.RepeatWrapping;
+			ground.material.map.encoding = THREE.sRGBEncoding;
+			// note that because the ground does not cast a shadow, .castShadow is left false
+			ground.receiveShadow = true;
+
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+			scene.add(ground);
+
+			const geometry = new THREE.BoxGeometry();
+			const material = new THREE.MeshNormalMaterial();
+			cube = new THREE.Mesh(geometry, material);
+			scene.add(cube);
+
+			controls = new THREE.OrbitControls (camera, renderer.domElement);
+
+			//camera.position.z = 5;
+		}
+		const animate = function () {
+			controls.update();
+			requestAnimationFrame(animate);
+
+			cube.rotation.x += 0.01;
+			cube.rotation.y += 0.01;
+
+			renderer.render(scene, camera);
+		};
+		init();
+		animate();
+	</script>
+</body>
+
+</html>
