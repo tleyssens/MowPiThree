@@ -15,7 +15,9 @@
   "author": "Tom Leyssens",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "5.0.0-beta2",
     "esm": "3.2.25",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "pug": "3.0.2"
   }
 }
