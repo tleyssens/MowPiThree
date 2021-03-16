@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+console.log('In www.js')
 /**
  * Load shared settings-data 
  */
