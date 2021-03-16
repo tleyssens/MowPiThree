@@ -1,0 +1,21 @@
+doctype html
+html
+  
+  //include includes/head.pug
+  //include includes/maphead.pug
+  body
+    //include includes/mapNavbar.pug
+    block content
+
+    script
+      //- include includes/joystickT.js
+      //- include includes/scriptMap.js
+      //- include includes/nav/state.js
+      //- include includes/scriptNMEA.js 
+      //- include includes/map/speedometer2.js
+      //- include includes/map/speedometer1.js
+      //- include includes/map/angleError.js
+      
+    //- script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyADf2Ss5DEZdZMFEJ0f8fmi1KcYRZMYLZI&callback=initMap'
+        async defer)
+    include includes/foot.pug

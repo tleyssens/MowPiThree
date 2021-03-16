@@ -1,9 +1,11 @@
 {
   "name": "mowpithree1",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "three.js page server",
-  "main": "index.js",
+  "main": "./bin/www",
   "scripts": {
+    "start": "node ./bin/www.js",
+    "start:dev": "DEBUG=express:* sudo ./node_modules/.bin/nodemon -e js,mjs,json,pug,css bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

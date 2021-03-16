@@ -1,0 +1,50 @@
+
+extends mapLayout
+
+block content
+  //cc:MapUI#1;Layout opzetten
+  //h1= s.driveEnable
+  //p Welcome to #{title}
+  .row
+    .col-sm-3
+      #quality {{qualitydata}}
+    .col-sm-3
+      #waypoint {{waypointdata}}
+  .row
+    //button(type='button' id='RPiAfsluiten' class='btn btn-primary') RPI afsluiten
+    button(type='button' id='simulatie' class='btn btn-primary') Simulatie
+  //#map(style="height:400px;width:100%;")
+  #map_canvas
+  .row 
+    .col-sm-3
+      input(type="range" id="Pslider" min="0" max="5000" value="3300")
+      p P Value: <span id="Pvalue">
+    .col-sm-3
+      input(type="range" id="Islider" min="0" max="5000" value="115")
+      p I Value: <span id="Ivalue">
+    .col-sm-3
+      input(type="range" id="Dslider" min="0" max="5000" value="1760")
+      p D Value: <span id="Dvalue">
+  #targetDist {{targetDist}}
+  //.container 
+  .row.row-eq-height(style={height:"200px"})
+    .col-md-3.col-lg-3
+      #containerJoystick
+    .col-md-3.col-lg-3
+      span(class='label') pause:
+        span(class='value' id='pauseValue' ) false
+        input(type="checkbox" id="pause" class="control")
+    .col-md-3.col-lg-3
+      #joystickResult
+
+  canvas(id="myChart")
+  #jsoneditor(style={width: "400px", height: "400px"})
+  //#NMEA
+  .form-group
+    label(for='exampleFormControlTextarea2') NMEA data
+    textarea(class='form-control rounded-0' id='NMEA' rows="3") {{gpsData}}
+  .form-group
+    label(for='exampleFormControlTextarea3') settings data
+    textarea(class='form-control rounded-0' id='settings' rows="3") {{settingsdata}}
+  #dialog(style="display:none;")
+    input(type="file" nwsaveas)
